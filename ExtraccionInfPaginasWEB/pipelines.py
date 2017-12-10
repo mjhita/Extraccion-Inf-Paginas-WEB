@@ -14,12 +14,10 @@ class ExtraccionInfPaginasWEBJsonPipeline(object):
 
     def open_spider(self, spider):
         try:
-            #self.fichero = open('OSL.json', 'w')
             self.fichero = codecs.open('OSL.json', 'w', encoding = 'utf-8')
         except:
             raise CloseSpider("No se ha podido crear el archivo JSON con los Post") 
         try: 
-            #self.ficheroSinEtiquetas = open('OSLSinEtiquetas.json', 'w')
             self.ficheroSinEtiquetas = codecs.open('OSLSinEtiquetas.json', 'w', encoding = 'utf-8')
         except:
             raise CloseSpider("No se ha podido crear el archivo JSON con los Post sin etiquetas")        
@@ -46,7 +44,7 @@ class ExtraccionInfPaginasWEBJsonPipeline(object):
         else:
             raise DropItem("Falta el título del post")
 
-"""
+
 class ExtraccionInfPaginasWEBTablaHTMLPipeline(object):
     def PonerInicioHTML(esConEtiqueta):
         if esConEtiqueta:
@@ -99,21 +97,21 @@ class ExtraccionInfPaginasWEBTablaHTMLPipeline(object):
             self.fichero = open('OSL.html', 'w')
             self.PonerInicioHTML(True)
         except:
-            raise CloseSpider("No se ha podido crear el archivo HTML con los Post") 
+            pass #raise CloseSpider("No se ha podido crear el archivo HTML con los Post") 
         try: 
             self.ficheroSinEtiquetas = open('OSLSinEtiquetas.html', 'w')
             self.PonerInicioHTML(False)
         except:
-            raise CloseSpider("No se ha podido crear el archivo HTML con los Post sin etiquetas")        
+            pass #raise CloseSpider("No se ha podido crear el archivo HTML con los Post sin etiquetas")        
 
     def close_spider(self, spider):
         try:
-            #self.PonerFinHTML(True)
+            self.PonerFinHTML(True)
             self.fichero.close()
         except:
-            raise CloseSpider("No se ha podido cerrar el archivo HTML con los Post") 
+            pass# raise CloseSpider("No se ha podido cerrar el archivo HTML con los Post") 
         try:
-            #self.PonerFinHTML(False)
+            self.PonerFinHTML(False)
             self.ficheroSinEtiquetas.close()
         except:
             pass# raise CloseSpider("No se ha podido cerrar el archivo HTML con los Post sin etiquetas")        
@@ -133,4 +131,4 @@ class ExtraccionInfPaginasWEBTablaHTMLPipeline(object):
         else:
             raise DropItem("Falta el título del post")
 
-"""
+
