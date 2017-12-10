@@ -5,10 +5,23 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+# import scrapy
+from scrapy.item import Item, Field
 
 
-class ExtraccioninfpaginaswebItem(scrapy.Item):
+#class ExtraccioninfpaginaswebItem(scrapy.Item):
+class ExtraccioninfpaginaswebItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    titulo = Field()
+    autor = Field()
+    contenido = Field()
+    listaCategorias = Field()
+    listaEtiquetas = Field()
+    
+    # Campos de información general ¿?
+    url = Field()
+    projecto = Field()
+    spider = Field()
+    server = Field()
+    fecha = Field()
