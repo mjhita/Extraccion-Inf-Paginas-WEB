@@ -1,23 +1,15 @@
-# -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
 import json
 import codecs
 import sys
 import re
-from scrapy.exceptions import DropItem
-from scrapy.exceptions import CloseSpider
+
 from paginaHTML import PaginaHtml
 def crearTablaHTML(esConEtiquetas):
     try:
         if esConEtiquetas:
-            fichJson = codecs.open('OSL.json', 'r', encoding = 'utf-8')
+            fichJson = codecs.open('../OSL.json', 'r', encoding = 'utf-8')
         else:
-            fichJson = codecs.open('OSLSinEtiquetas.json', 'r', encoding = 'utf-8')        
+            fichJson = codecs.open('../OSLSinEtiquetas.json', 'r', encoding = 'utf-8')        
     except IOError as e:
         print "Error abriendo archivo Json para generar tabla en HTML ({0}): {1}".format(e.errno, e.strerror)
         return ""
@@ -64,7 +56,7 @@ def crearTablasHTML():
     if tabla:
         html.insertar_contenido(tabla)
         try:
-            with open("OSL.html", "w") as f:
+            with open("../OSL.html", "w") as f:
                 f.write(html.crear_pagina())       
         except IOError as e:
             print "Error I/O ({0}): {1}".format(e.errno, e.strerror)
@@ -77,48 +69,17 @@ def crearTablasHTML():
     if tablaSin:
         htmlSin.insertar_contenido(tablaSin)
         try:
-            with open("OSLSinEtiquetas.html", "w") as f:
+            with open("../OSLSinEtiquetas.html", "w") as f:
                 f.write(htmlSin.crear_pagina())       
         except IOError as e:
             print "Error I/O ({0}): {1}".format(e.errno, e.strerror)
         except:
             print "Error inexperado:", sys.exc_info()[0]
 
-class ExtraccionInfPaginasWEBJsonPipeline(object):
 
-    def open_spider(self, spider):
-        try:
-            self.fichero = codecs.open('OSL.json', 'w', encoding = 'utf-8')
-            #self.fichero.write("[")
-        except:
-            raise CloseSpider("No se ha podido crear el archivo JSON con los Post") 
-        try: 
-            self.ficheroSinEtiquetas = codecs.open('OSLSinEtiquetas.json', 'w', encoding = 'utf-8')
-            #self.ficheroSinEtiquetas.write("[")
-        except:
-            raise CloseSpider("No se ha podido crear el archivo JSON con los Post sin etiquetas")        
-
-    def close_spider(self, spider):
-        try:
-            #self.fichero.write("]")
-            self.fichero.close()
-        except:
-            raise CloseSpider("No se ha podido cerrar el archivo JSON con los Post")
-        try:
-            #self.ficheroSinEtiquetas.write("]")
-            self.ficheroSinEtiquetas.close()
-        except:
-            raise CloseSpider("No se ha podido cerrar el archivo JSON con los Post sin etiquetas")
-        crearTablasHTML()
-
+def main():
+    crearTablasHTML()
     
-    def process_item(self, item, spider):
-        if item['titulo']:
-            line = json.dumps(dict(item), ensure_ascii=False) 
-            if item['listaEtiquetas'] and len(item['listaEtiquetas']) > 0:
-                self.fichero.write(line)
-            else:
-                self.ficheroSinEtiquetas.write(line)
-            return item
-        else:
-            raise DropItem("Falta el título del post")
+if __name__ == "__main__":
+    main()
+
