@@ -1,9 +1,29 @@
 # -*- coding: utf-8 -*-
 
-# Define your item pipelines here
+############################################################################
 #
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+# Curso Tratamiento de datos, juegos y programación gráfica en Python
+#
+# TEMA: Extracción de información de páginas WEB
+# Tarea: Dame Posts y te diré de quienes son. 
+#
+# Definición del pipeline para el item en JSON
+# 
+#
+# Define la clase pipeline a JSON ExtraccionInfPaginasWEBJsonPipeline
+# Se generan dos archivos: OSL.json, que contiene los Items con etiquetas, y
+# OSLSinEtiquetas.json que contiene los Items sin etiquetas, extraidos 
+# de la página WEB http://osl.ugr.es
+#
+# Además define dos funciones crearTablaHTML y crearTablasHTML que 
+# permiten generar dos archivos HTML cada uno con una tabla con el 
+# título, autor y contenido de cada Item. De forma análoga a los anteriores,
+# uno de ellos para los Items con etiqueta OSL.html y otro para los que no
+# tienen etiquetas OSLSinEtiquetas.html
+#
+# Implementado por: Manuel Jesús Hita Jiménez - 2017
+#
+############################################################################
 
 import json
 import codecs
@@ -12,6 +32,7 @@ import re
 from scrapy.exceptions import DropItem
 from scrapy.exceptions import CloseSpider
 from paginaHTML import PaginaHtml
+
 def crearTablaHTML(esConEtiquetas):
     try:
         if esConEtiquetas:
@@ -57,7 +78,10 @@ def crearTablaHTML(esConEtiquetas):
 
 
 def crearTablasHTML():
-  
+    """
+        Genera las dos tablas, con y sin etiquetas, cada una en un archivo HTML,
+        partiendo de los arquivos generados en JSON
+    """ 
     html = PaginaHtml("Tabla OSL con etiquetas")   
     html.insertar_estilo_tabla_1('osl')
     tabla = crearTablaHTML(True)
@@ -83,6 +107,8 @@ def crearTablasHTML():
             print "Error I/O ({0}): {1}".format(e.errno, e.strerror)
         except:
             print "Error inexperado:", sys.exc_info()[0]
+
+# =============================================================================
 
 class ExtraccionInfPaginasWEBJsonPipeline(object):
 

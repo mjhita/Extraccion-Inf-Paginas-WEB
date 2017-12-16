@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 
-# Define here the models for your scraped items
+############################################################################
 #
-# See documentation in:
-# http://doc.scrapy.org/en/latest/topics/items.html
+# Curso Tratamiento de datos, juegos y programación gráfica en Python
+#
+# TEMA: Extracción de información de páginas WEB
+# Tarea: Dame Posts y te diré de quienes son. 
+#
+# Definición del modelo para extracción de Items
+#
+# Implementado por: Manuel Jesús Hita Jiménez - 2017
+#
+############################################################################
 
-# import scrapy
 from scrapy.item import Item, Field
 
 class ItemOSL(Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    # Definición de campos que extraer
     titulo = Field()
     autor = Field()
     contenido = Field()
     listaCategorias = Field()
     listaEtiquetas = Field()
     
-    # Campos de información general
-    url = Field()
-    projecto = Field()
-    spider = Field()
-    server = Field()
-    fecha = Field()
+ 
