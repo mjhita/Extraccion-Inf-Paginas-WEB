@@ -6,7 +6,7 @@ Tema Extracción de Información de páginas WEB.
 Tarea: DAME POSTS Y TE DIRÉ DE QUIENES SON
 ----------------------------------------------------------------------------
 Enunciado
-Tarea
+
 Para cada post que aparece en la página principal del blog de la Oficina de Software Libre de la UGR, hay que obtener lo siguiente:
   Título.
   Autor.
