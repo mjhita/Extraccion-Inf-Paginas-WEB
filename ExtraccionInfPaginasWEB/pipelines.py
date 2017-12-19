@@ -48,6 +48,9 @@ def crearTablaHTML(esConEtiquetas):
     else:
         contenidofichero = "[" + fichJson.read() + "]"
         contenidofichero = re.sub("}{", "},{",contenidofichero)
+        contenidofichero = re.sub('", "','',contenidofichero)
+        contenidofichero = re.sub("<(.)+>","",contenidofichero) 
+        
         #tabla = json.loads(fichJson.read())
         fichJson.close()
         tabla = json.loads(contenidofichero)
@@ -139,7 +142,7 @@ class ExtraccionInfPaginasWEBJsonPipeline(object):
 
     
     def process_item(self, item, spider):
-        if item['titulo']:
+        if item['titulo']: 
             line = json.dumps(dict(item), ensure_ascii=False) 
             if item['listaEtiquetas'] and len(item['listaEtiquetas']) > 0:
                 self.fichero.write(line)
