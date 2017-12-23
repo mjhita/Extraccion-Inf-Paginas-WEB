@@ -19,3 +19,6 @@ Estos datos deberán ser almacenados en algún fichero (por ejemplo en formato X
 
 Para ejecutar el proyecto hay que introducir:
 $ scrapy crawl osl
+Al extraer todos los post, es recomendable usar  CLOSESPIDER_ITEMCOUNT
+para limitar el número de estos. Por ejemplo
+   scrapy crawl osl -s CLOSESPIDER_ITEMCOUNT=20
