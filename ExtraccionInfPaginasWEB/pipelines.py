@@ -47,9 +47,10 @@ def crearTablaHTML(esConEtiquetas):
         return ""
     else:
         contenidofichero = "[" + fichJson.read() + "]"
+        #contenidofichero = re.sub("<(.)+>","",contenidofichero) 
         contenidofichero = re.sub("}{", "},{",contenidofichero)
-        contenidofichero = re.sub('", "','',contenidofichero)
-        contenidofichero = re.sub("<(.)+>","",contenidofichero) 
+        #contenidofichero = re.sub('", "',' ',contenidofichero)
+        
         
         #tabla = json.loads(fichJson.read())
         fichJson.close()
