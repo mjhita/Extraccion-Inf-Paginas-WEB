@@ -40,7 +40,8 @@ class OslSpider(CrawlSpider):
         itemOSL['titulo'] = response.xpath('//*[starts-with(@id,"post-")]/header/h1/text()').extract()
         itemOSL['autor'] = response.xpath('//*[starts-with(@id,"post-")]/header/div/span/span/a/text()').extract() 
         contenido = response.xpath('//*[starts-with(@id,"post-")]/section').extract()
-        nuevoContenido = re.sub("<(.*?)>","",contenido[0])
+        nuevoContenido = re.sub("<(.*?)>", "",contenido[0])
+        nuevoContenido = re.sub("(\\r|\\n)", "", nuevoContenido) 
         nuevoContenido = re.sub("\\xa0(\d*)","",nuevoContenido)    
         contenido[0] = nuevoContenido    
         itemOSL['contenido'] = contenido
