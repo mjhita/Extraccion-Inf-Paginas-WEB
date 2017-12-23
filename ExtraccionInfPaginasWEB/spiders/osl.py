@@ -8,9 +8,11 @@
 #
 # Definición del Spider para la extracción de los post en dos direcciones,
 # obtiene todos los post, ya que va volcando los de las páginas anteriores.
-# Es recomendable usar CLOSESPIDER_ITEMCOUNT al hacer scrapy crawl
-# por ejemplo:
-#       scrapy crawl osl -s CLOSESPIDER_ITEMCOUNT=50
+# Es recomendable usar CLOSESPIDER_ITEMCOUNT al hacer scrapy crawl, para
+# limitar el número de post cargados.
+#
+# Por ejemplo:
+#       scrapy crawl osl -s CLOSESPIDER_ITEMCOUNT=20
 #
 # Implementado por: Manuel Jesús Hita Jiménez - 2017
 #
@@ -38,18 +40,7 @@ class OslSpider(CrawlSpider):
         itemOSL['titulo'] = response.xpath('//*[starts-with(@id,"post-")]/header/h1/text()').extract()
         itemOSL['autor'] = response.xpath('//*[starts-with(@id,"post-")]/header/div/span/span/a/text()').extract() 
         contenido = response.xpath('//*[starts-with(@id,"post-")]/section').extract()
-        
-        contenido[0] = re.sub('(\\r|\\n)','', contenido[0])
-        # Cambia los párrafos tipo <p .....> ... </p> por <p> ... </p>
-        contenido[0] = re.sub('(<p )(.*?)>','<p>', contenido[0])
-        
-        # Obtiene una lista con todos los párrafos
-        parrafos = re.findall('(<p>)(.*?)(</p>)', contenido[0])
-        nuevoContenido = ""
-        # Para cada párrafo elimina el contenido entre < >
-        for parrafo in parrafos:
-            limpio = re.sub("<(.*?)>","",parrafo[1])
-            nuevoContenido += limpio + "\n"
+        nuevoContenido = re.sub("<(.*?)>","",contenido[0])
         nuevoContenido = re.sub("\\xa0(\d*)","",nuevoContenido)    
         contenido[0] = nuevoContenido    
         itemOSL['contenido'] = contenido
